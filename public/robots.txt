@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /klien/
+Disallow: /admin/
+Disallow: /api/
+
+Sitemap: https://pratamamc.my.id/sitemap.xml

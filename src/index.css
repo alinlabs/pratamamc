@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .minimal-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .minimal-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .minimal-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #FAFAF9;
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+  .minimal-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #f5f5f4; /* stone-100 */
+  }
+  .minimal-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #FAFAF9 transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #FAFAF9;
+    border-radius: 4px;
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #f5f5f4;
+  }
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #FAFAF9 transparent;
+  }
+}
+
+/* Hide floating buttons when sidebar is open */
+body.sidebar-open .floating-action-btn {
+  display: none !important;
+}
+
+body.modal-open {
+  overflow: hidden !important;
+}
+
+body.modal-open #root {
+  pointer-events: none !important;
+  user-select: none !important;
+  touch-action: none !important;
+}
+
+/* Hide Navigation and Footer in Auth Screens */
+body.hide-nav-footer nav,
+body.hide-nav-footer header,
+body.hide-nav-footer footer,
+body.hide-nav-footer .bottom-nav {
+  display: none !important;
+}
+
+/* Custom Scrollbar */
+html {
+  overflow-y: overlay;
+  scrollbar-width: thin;
+  scrollbar-color: #FAFAF9 transparent;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #FAFAF9;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #f5f5f4;
+}

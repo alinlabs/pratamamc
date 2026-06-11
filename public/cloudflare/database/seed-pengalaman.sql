@@ -1,0 +1,5 @@
+-- seed-pengalaman.sql
+INSERT OR REPLACE INTO pengalaman (id, judul, gambar, deskripsi, detail) VALUES 
+('exp-001', 'Host & MC Wedding - Lebih dari 150+ Event', '/gambar/pengalaman/wed1.jpg,/gambar/pengalaman/wed2.jpg', 'Memandu lebih dari 150 resepsi pernikahan baik berkonsep tradisional, nasional, maupun internasional.', 'Menjadi ujung tombak suasana pada momen spesial, memandu interaksi, hiburan, hingga acara formal agar berjalan lancar.'),
+('exp-002', 'Corporate Gathering PT KAI', '/gambar/pengalaman/corp1.jpg,/gambar/pengalaman/corp2.jpg', 'Memandu acara corporate gathering PT Kereta Api Indonesia (Persero) yang dihadiri jajaran direksi dan ratusan pegawai.', 'Membangun antusiasme peserta, memandu games interaktif, dan mengatur rundown skala besar dengan presisi.'),
+('exp-003', 'Festival Musik dan Budaya Jawa Barat', '/gambar/pengalaman/fest1.jpg', 'Menjadi MC utama dalam festival musik dan kebudayaan bergengsi tingkat provinsi di lapangan terbuka dengan ribuan penonton.', 'Berhasil mempertahankan energi crowd (penonton) selama acara berlangsung, memastikan band-band lokal maupun nasional tampil sesuai jadwal.');

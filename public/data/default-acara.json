@@ -1,0 +1,370 @@
+[
+  {
+    "segmen": "Persiapan",
+    "kegiatan": "Briefing Pra Akad",
+    "deskripsi": "Koordinasi awal antara panitia, vendor, dan keluarga inti terkait susunan acara akad.",
+    "catatan": "Pastikan HT stanby, Checklist kehadiran vendor, Print susunan acara terbaru",
+    "durasi": 30,
+    "musik": [],
+    "status": ""
+  },
+  {
+    "segmen": "Persiapan",
+    "kegiatan": "Persiapan & Pengkondisian",
+    "deskripsi": "Persiapan panitia dan penataan barisan keluarga sebelum penyambutan besan.",
+    "catatan": "Keluarga wanita siap di area penerimaan, Posisikan penerima tamu",
+    "durasi": 15,
+    "musik": [],
+    "status": ""
+  },
+  {
+    "segmen": "Pembukaan",
+    "kegiatan": "Penyambutan Calon Besan",
+    "deskripsi": "Penyambutan kedatangan keluarga calon mempelai pria oleh keluarga calon mempelai wanita.",
+    "catatan": "Penyiapan untaian kalung melati, Payung agung siap di gerbang, Sambutan MC bersiap",
+    "durasi": 10,
+    "musik": [],
+    "status": ""
+  },
+  {
+    "segmen": "Pembukaan",
+    "kegiatan": "Mapag Panganten",
+    "deskripsi": "Prosesi penjemputan dan penyambutan pengantin melalui kesenian adat.",
+    "catatan": "Penari adat bersiap di posisi, Ki Lengser mengondisikan barisan, Rute jalan bersih dari kabel/hambatan",
+    "durasi": 20,
+    "musik": [],
+    "status": ""
+  },
+  {
+    "segmen": "Pembukaan",
+    "kegiatan": "Pengondisian & Pembukaan MC",
+    "deskripsi": "Penataan posisi keluarga dilanjutkan dengan pembukaan acara secara resmi oleh MC.",
+    "catatan": "Mic MC siap dan steril, Sound system stabil, Keluarga inti menempati kursi utama",
+    "durasi": 5,
+    "musik": [],
+    "status": ""
+  },
+  {
+    "segmen": "Pembukaan",
+    "kegiatan": "Doa Bersama",
+    "deskripsi": "Pembacaan doa pembuka untuk kelancaran dan keberkahan seluruh rangkaian acara.",
+    "catatan": "Petugas pembaca doa dipersilakan menempati mimbar, Teks doa tercetak siap",
+    "durasi": 5,
+    "musik": [],
+    "status": ""
+  },
+  {
+    "segmen": "Pembukaan",
+    "kegiatan": "Sambutan Keluarga Pria",
+    "deskripsi": "Pidato penyerahan calon mempelai pria kepada pihak keluarga calon mempelai wanita.",
+    "catatan": "Perwakilan keluarga pria dipersilakan didampingi juru bicara, Stand mic disiapkan",
+    "durasi": 10,
+    "musik": [],
+    "status": ""
+  },
+  {
+    "segmen": "Pembukaan",
+    "kegiatan": "Sambutan Keluarga Wanita",
+    "deskripsi": "Pidato penerimaan calon mempelai pria oleh pihak keluarga wanita.",
+    "catatan": "Perwakilan keluarga wanita siap di area penerimaan, Mic nirkabel siap",
+    "durasi": 10,
+    "musik": [],
+    "status": ""
+  },
+  {
+    "segmen": "Pembukaan",
+    "kegiatan": "Penyerahan Seserahan",
+    "deskripsi": "Penyerahan seserahan secara simbolis dari pihak pria kepada pihak wanita.",
+    "catatan": "Baki seserahan estafet siap di barisan depan, Tim dokumentasi siap",
+    "durasi": 15,
+    "musik": [],
+    "status": ""
+  },
+  {
+    "segmen": "Akad",
+    "kegiatan": "Persiapan Akad Nikah",
+    "deskripsi": "Pengkondisian area akad serta penempatan calon pengantin, wali, dan para saksi.",
+    "catatan": "Meja akad siap, Alat tulis & berkas KUA lengkap, Kursi wali & saksi ditata rapi",
+    "durasi": 10,
+    "musik": [],
+    "status": ""
+  },
+  {
+    "segmen": "Akad",
+    "kegiatan": "Izin Nikah",
+    "deskripsi": "Permohonan izin nikah kepada orang tua. Disusul jawaban pengantin wanita jika belum disandingkan.",
+    "catatan": "Tisu disiapkan untuk pengantin wanita, Posisi bersimpuh menghadap orang tua, Mic nirkabel steril",
+    "durasi": 10,
+    "musik": [],
+    "status": ""
+  },
+  {
+    "segmen": "Akad",
+    "kegiatan": "Penyandingan Pengantin",
+    "deskripsi": "Mempelai wanita berjalan menghampiri dari belakang. Mempelai pria berbalik menatap syukur, diakhiri salaman tanpa sentuhan.",
+    "catatan": "Mempelai wanita dipandu keluar kamar, Kerudung akad terpasang rapi, Pengantin pria berbalik badan",
+    "durasi": 15,
+    "musik": [],
+    "status": ""
+  },
+  {
+    "segmen": "Akad",
+    "kegiatan": "Pembacaan Ayat Suci Al-Quran",
+    "deskripsi": "Lantunan ayat suci Al-Quran sebelum prosesi inti ijab kabul dimulai.",
+    "catatan": "Qori/Qoriah bersiap di tempat, Kitab suci Al-Quran disiapkan",
+    "durasi": 10,
+    "musik": [],
+    "status": ""
+  },
+  {
+    "segmen": "Akad",
+    "kegiatan": "Wejangan Wali Nikah",
+    "deskripsi": "Penyampaian nasihat pernikahan dari ayah atau wali nikah kepada kedua calon mempelai.",
+    "catatan": "Wali nikah siap di posisi meja akad, Lilin ambient diredupkan untuk kekhidmatan",
+    "durasi": 10,
+    "musik": [],
+    "status": ""
+  },
+  {
+    "segmen": "Akad",
+    "kegiatan": "Khutbah Nikah",
+    "deskripsi": "Penyampaian khutbah nikah oleh penghulu atau pemuka agama.",
+    "catatan": "Materi khutbah dikoordinasikan dengan penghulu KUA",
+    "durasi": 10,
+    "musik": [],
+    "status": ""
+  },
+  {
+    "segmen": "Akad",
+    "kegiatan": "Ijab Kabul",
+    "deskripsi": "Prosesi inti pengucapan janji suci dan pengesahan pernikahan.",
+    "catatan": "Maskawin atau mahar diletakkan di tengah meja, Penghulu memimpin prosesi ijab kabul",
+    "durasi": 10,
+    "musik": [],
+    "status": ""
+  },
+  {
+    "segmen": "Akad",
+    "kegiatan": "Doa Akad Nikah",
+    "deskripsi": "Pembacaan doa pasca ijab kabul untuk keberkahan kedua mempelai.",
+    "catatan": "Seluruh hadirin tenang dan khusyuk, Buku doa didistribusikan",
+    "durasi": 10,
+    "musik": [],
+    "status": ""
+  },
+  {
+    "segmen": "Akad",
+    "kegiatan": "Penandatanganan Buku Nikah",
+    "deskripsi": "Penandatanganan dokumen dan buku nikah beserta dokumentasi oleh KUA.",
+    "catatan": "Pena penandatanganan siap, Dokumen KUA siap bermaterai",
+    "durasi": 10,
+    "musik": [],
+    "status": ""
+  },
+  {
+    "segmen": "Akad",
+    "kegiatan": "Pengondisian Area Akad",
+    "deskripsi": "Pemberesan meja akad, sementara wali, saksi, dan petugas KUA meninggalkan area inti.",
+    "catatan": "Meja akad dirapikan dengan cepat ke belakang panggung",
+    "durasi": 5,
+    "musik": [],
+    "status": ""
+  },
+  {
+    "segmen": "Akad",
+    "kegiatan": "Sesi Foto Buku Nikah",
+    "deskripsi": "Sesi pemotretan khusus kedua pengantin sambil memegang buku nikah.",
+    "catatan": "Mempelai memegang buku nikah masing-masing, Pose foto diarahkan oleh fotografer",
+    "durasi": 20,
+    "musik": [],
+    "status": ""
+  },
+  {
+    "segmen": "Akad",
+    "kegiatan": "Doa Pengantin",
+    "deskripsi": "Mempelai pria memegang ubun-ubun istri sambil berdoa. Diakhiri dengan kecupan kening dan tiupan pelan di ubun-ubun.",
+    "catatan": "Mempelai pria memegang ubun-ubun istri, Kecupan kening dikoordinasikan dengan tim WO",
+    "durasi": 10,
+    "musik": [],
+    "status": ""
+  },
+  {
+    "segmen": "Adat",
+    "kegiatan": "Persiapan Sungkeman",
+    "deskripsi": "Pengkondisian area pelaminan dan pemanggilan orang tua untuk prosesi sungkeman.",
+    "catatan": "Kursi sungkeman disiapkan di panggung pelaminan, Kain rumbai sungkem dipasang",
+    "durasi": 5,
+    "musik": [],
+    "status": ""
+  },
+  {
+    "segmen": "Adat",
+    "kegiatan": "Sungkeman",
+    "deskripsi": "Prosesi memohon doa restu pengantin kepada kedua pasang orang tua.",
+    "catatan": "Tisu cadangan dipegang WO, Melodi kecapi suling syahdu diputar, MC memandu narasi sedih",
+    "durasi": 20,
+    "musik": [
+      "msc-002-saxophone"
+    ],
+    "status": ""
+  },
+  {
+    "segmen": "Adat",
+    "kegiatan": "Huap Lingkung",
+    "deskripsi": "Prosesi adat pemberian suapan terakhir dari kedua orang tua kepada pengantin.",
+    "catatan": "Nasi kuning atau ketan dalam piring kecil lengkap dengan sendok disiapkan",
+    "durasi": 10,
+    "musik": [
+      "msc-012-vokal"
+    ],
+    "status": ""
+  },
+  {
+    "segmen": "Adat",
+    "kegiatan": "Betot Bakakak",
+    "deskripsi": "Prosesi pengantin menarik ayam panggang utuh secara bersamaan sebagai simbol rezeki berumah tangga.",
+    "catatan": "Ayam bakakak matang utuh di atas nampan kayu siap, Air cuci tangan siap",
+    "durasi": 10,
+    "musik": [
+      "msc-012-vokal"
+    ],
+    "status": ""
+  },
+  {
+    "segmen": "Adat",
+    "kegiatan": "Nincak Endog",
+    "deskripsi": "Mempelai pria menginjak telur, lalu istri membersihkan kakinya sebagai simbol bakti.",
+    "catatan": "Telur ayam kampung utuh siap di cobek, Kendi air berisi bunga mawar siap, Handuk bersih kecil",
+    "durasi": 10,
+    "musik": [
+      "msc-012-vokal"
+    ],
+    "status": ""
+  },
+  {
+    "segmen": "Adat",
+    "kegiatan": "Meleum Harupat",
+    "deskripsi": "Membakar dan mematahkan lidi (harupat) sebagai simbol penyelesaian masalah keluarga secara bersama.",
+    "catatan": "Lidi harupat 7 ikat siap, Lilin menyala dan korek api disiapkan WO",
+    "durasi": 10,
+    "musik": [
+      "msc-012-vokal"
+    ],
+    "status": ""
+  },
+  {
+    "segmen": "Adat",
+    "kegiatan": "Mepeus Kendi",
+    "deskripsi": "Memecahkan kendi tanah liat sebagai penanda resmi berakhirnya masa lajang.",
+    "catatan": "Kendi kosong siap dipegang berdua untuk dipecahkan, Sapu siap membersihkan beling dengan cepat",
+    "durasi": 10,
+    "musik": [
+      "msc-012-vokal"
+    ],
+    "status": ""
+  },
+  {
+    "segmen": "Adat",
+    "kegiatan": "Saweran",
+    "deskripsi": "Prosesi pembagian uang dan permen sebagai wujud berbagi kebahagiaan dan rezeki.",
+    "catatan": "Bokor sawer berisi beras kuning/permen/koin/lipatan uang disiapkan",
+    "durasi": 20,
+    "musik": [
+      "msc-010-vokal",
+      "msc-011-vokal"
+    ],
+    "status": ""
+  },
+  {
+    "segmen": "Istirahat",
+    "kegiatan": "Sesi Foto Keluarga",
+    "deskripsi": "Sesi dokumentasi foto antara pengantin, orang tua, dan keluarga terdekat.",
+    "catatan": "Urutan daftar foto keluarga disiapkan dan dibacakan oleh asisten WO",
+    "durasi": 30,
+    "musik": [],
+    "status": ""
+  },
+  {
+    "segmen": "Istirahat",
+    "kegiatan": "Istirahat (Break)",
+    "deskripsi": "Waktu jeda bagi pengantin dan panitia untuk beristirahat sejenak.",
+    "catatan": "Makanan pengantin diantar ke ruang transit, Touch up make up pengantin untuk resepsi",
+    "durasi": 90,
+    "musik": [],
+    "status": ""
+  },
+  {
+    "segmen": "Resepsi",
+    "kegiatan": "Persiapan Resepsi",
+    "deskripsi": "Briefing panitia dan persiapan akhir pengantin sebelum acara resepsi dimulai.",
+    "catatan": "Baju resepsi siap pakai, Hand bouquet siap dipegang mempelai",
+    "durasi": 30,
+    "musik": [],
+    "status": ""
+  },
+  {
+    "segmen": "Resepsi",
+    "kegiatan": "Pembukaan Resepsi",
+    "deskripsi": "Penyambutan tamu dan pembukaan acara resepsi secara resmi oleh MC.",
+    "catatan": "MC menyapa para tamu undangan, Musik latar bergenre romantis lembut",
+    "durasi": 5,
+    "musik": [],
+    "status": ""
+  },
+  {
+    "segmen": "Resepsi",
+    "kegiatan": "Kirab Pengantin",
+    "deskripsi": "Iring-iringan elegan kedua mempelai memasuki ruang resepsi menuju pelaminan.",
+    "catatan": "Pagar ayu dan pagar bagus bersiap di barisan depan, Pengantin berjalan perlahan dengan tempo khusus",
+    "durasi": 15,
+    "musik": [],
+    "status": ""
+  },
+  {
+    "segmen": "Resepsi",
+    "kegiatan": "Wedding Kiss",
+    "deskripsi": "Momen romantis pameran kasih sayang kedua mempelai di hadapan para tamu.",
+    "catatan": "Petunjuk pose romantis dari fotografer, Confetti siap ditembakkan di sisi kiri kanan",
+    "durasi": 5,
+    "musik": [],
+    "status": ""
+  },
+  {
+    "segmen": "Resepsi",
+    "kegiatan": "Lempar Bunga",
+    "deskripsi": "Momen seru pengantin melempar buket bunga kepada para tamu lajang.",
+    "catatan": "Buket bunga lempar siap digunakan, MC mengundang para lajang berkumpul di tengah",
+    "durasi": 10,
+    "musik": [],
+    "status": ""
+  },
+  {
+    "segmen": "Resepsi",
+    "kegiatan": "Pesan Penerima Bunga",
+    "deskripsi": "Penyampaian ucapan selamat dan doa dari tamu yang berhasil menangkap bunga.",
+    "catatan": "Mic nirkabel disiapkan untuk diserahkan kepada tamu yang berhasil menangkap buket",
+    "durasi": 5,
+    "musik": [],
+    "status": ""
+  },
+  {
+    "segmen": "Resepsi",
+    "kegiatan": "Flashmob",
+    "deskripsi": "Kejutan tarian meriah bersama tamu atau keluarga untuk menghidupkan suasana.",
+    "catatan": "Lagu flashmob diputar, Panitia dan teman dekat diposisikan di depan panggung",
+    "durasi": 10,
+    "musik": [
+      "msc-023"
+    ],
+    "status": ""
+  },
+  {
+    "segmen": "Resepsi",
+    "kegiatan": "Penutupan Acara",
+    "deskripsi": "Penutupan seluruh rangkaian acara oleh MC, diakhiri salam pamit dan ucapan terima kasih.",
+    "catatan": "Foto dokumentasi penutup bersama seluruh panitia, keluarga, dan seluruh vendor acara",
+    "durasi": 5,
+    "musik": [],
+    "status": ""
+  }
+]

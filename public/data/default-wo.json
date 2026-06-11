@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "peran": "Wedding Manager",
+    "deskripsi": "Pemimpin operasional keseluruhan proyek pernikahan.",
+    "detail": "Membuat timeline acara, membuat checklist pekerjaan, membagi tugas tim, mengawasi progres persiapan, memastikan vendor sesuai jadwal, mengatur meeting dengan klien, mengontrol anggaran operasional, memonitor kesiapan venue, menyelesaikan masalah lapangan, memastikan seluruh tim memahami rundown."
+  },
+  {
+    "id": 2,
+    "peran": "Wedding Planner",
+    "deskripsi": "Perancang konsep dan kebutuhan pernikahan.",
+    "detail": "Membuat konsep acara, menentukan tema pernikahan, membuat moodboard, membantu menyusun anggaran, merekomendasikan vendor, membuat timeline persiapan, membantu pemilihan dekorasi, membantu pemilihan warna tema, membantu menentukan konsep pelaminan."
+  },
+  {
+    "id": 3,
+    "peran": "Wedding Coordinator",
+    "deskripsi": "Koordinator pelaksanaan acara.",
+    "detail": "Memastikan rundown berjalan, memeriksa kesiapan vendor, mengatur alur acara, memastikan seluruh perlengkapan tersedia, mengkoordinasikan tim lapangan, memastikan waktu acara tepat, mengatur perpindahan sesi acara, memantau area venue."
+  },
+  {
+    "id": 4,
+    "peran": "Team Leader",
+    "deskripsi": "Pemimpin tim pada area tertentu.",
+    "detail": "Membagi tugas anggota, memonitor pekerjaan anggota, memberikan arahan lapangan, memastikan anggota hadir, melaporkan kondisi kepada manager, memastikan SOP dijalankan, membantu penyelesaian masalah kecil."
+  },
+  {
+    "id": 5,
+    "peran": "Liaison Officer",
+    "deskripsi": "Pendamping tamu atau pihak tertentu.",
+    "detail": "Mendampingi tamu keluarga/VIP, mendampingi pengisi acara, membantu kebutuhan tamu khusus, mengatur perpindahan tamu, membantu informasi lokasi, menjaga kenyamanan tamu, membantu koordinasi dengan tim WO."
+  },
+  {
+    "id": 6,
+    "peran": "Stage Manager",
+    "deskripsi": "Pengatur jalannya acara di area utama/panggung.",
+    "detail": "Mengatur jalannya acara panggung, memberi aba-aba kepada MC, mengatur perpindahan sesi, mengatur pengisi acara, memastikan audio berjalan, memastikan pencahayaan sesuai, memonitor waktu acara."
+  },
+  {
+    "id": 7,
+    "peran": "Runner",
+    "deskripsi": "Pelaksana tugas bantuan lapangan dan mobilitas.",
+    "detail": "Mengambil barang yang dibutuhkan, mengantar perlengkapan, membantu distribusi alat, membantu kebutuhan mendadak, mengarahkan tamu, memastikan barang sampai ke tujuan, menangani permintaan cepat."
+  }
+]

@@ -1,0 +1,7 @@
+{
+  "name": "Remix: pratamamc",
+  "description": "",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
