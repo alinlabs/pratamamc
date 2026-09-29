@@ -119,6 +119,14 @@ export default function FaqSection() {
                 exit={{ y: '100%', opacity: 1 }}
                 transition={{ type: "spring", damping: 25, stiffness: 200 }}
                 className="relative w-full md:w-[32rem] bg-white rounded-t-[2rem] md:rounded-[2rem] shadow-2xl pointer-events-auto flex flex-col overflow-hidden max-h-[85vh] md:max-h-[80vh]"
+                drag="y"
+                dragConstraints={{ top: 0, bottom: 0 }}
+                dragElastic={{ top: 0, bottom: 0.2 }}
+                onDragEnd={(e, info) => {
+                  if (info.offset.y > 100 || info.velocity.y > 500) {
+                    closePopup();
+                  }
+                }}
               >
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-stone-100 relative bg-white z-10 shrink-0">

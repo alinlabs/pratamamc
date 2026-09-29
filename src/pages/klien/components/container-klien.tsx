@@ -17,6 +17,7 @@ import {
   Check,
   RefreshCw,
   LogOut,
+  Music,
 } from "lucide-react";
 import Hero from "./hero-klien";
 import SusunanAcara from "../acara";
@@ -30,6 +31,7 @@ import DaftarVendor from "../vendor";
 import DaftarWO from "../wo";
 import DaftarPanitia from "../panitia";
 import Catatan from "../catatan";
+import MusikTab from "../musik";
 import ScrollReveal from "../../../components/ScrollReveal";
 import { FormContainer } from "./container-form";
 import NotFound from "../../../components/error-notfound";
@@ -80,10 +82,29 @@ export default function KlienContainer({
   const isExternalGDriveForm =
     tab === "gdrive" && new URLSearchParams(location.search).has("new");
 
-  const [event, setEvent] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const [event, setEvent] = useState<any>(() => {
+    try {
+      const cached = sessionStorage.getItem(`cached_event_ui_${username}`);
+      return cached ? JSON.parse(cached) : null;
+    } catch {
+      return null;
+    }
+  });
+  const [loading, setLoading] = useState(() => {
+    try {
+      return !sessionStorage.getItem(`cached_event_ui_${username}`);
+    } catch {
+      return true;
+    }
+  });
   const [error, setError] = useState<string | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    try {
+      return !!sessionStorage.getItem(`cached_event_ui_${username}`);
+    } catch {
+      return false;
+    }
+  });
   const [expectedClientId, setExpectedClientId] = useState<string>("");
 
   const validTabs = [
@@ -99,6 +120,7 @@ export default function KlienContainer({
     "ulasan",
     "gdrive",
     "wo",
+    "musik",
   ];
   const activeTab = validTabs.includes(tab || "") ? tab : "ringkasan";
 
@@ -135,6 +157,7 @@ export default function KlienContainer({
   ]);
 
   const verifyAuth = (clientId: string, foundUsername?: string) => {
+    window.scrollTo({ top: 0, behavior: "instant" as any });
     if (foundUsername && foundUsername !== username) {
       localStorage.setItem(`auth_${foundUsername}`, clientId);
       sessionStorage.setItem(`auth_${foundUsername}`, clientId);
@@ -152,9 +175,15 @@ export default function KlienContainer({
     fetchFullEvent(clientId);
   };
 
-  const fetchBasicEvent = async () => {
-    setLoading(true);
-    setError(null);
+  useEffect(() => {
+    if (isAuthenticated) {
+      window.scrollTo(0, 0);
+    }
+  }, [isAuthenticated]);
+
+  const fetchBasicEvent = async (isBackground = false) => {
+    if (!isBackground) setLoading(true);
+    if (!isBackground) setError(null);
     try {
       if (username === "klien") {
         const lastClientUsername = localStorage.getItem("last_client_username");
@@ -168,11 +197,13 @@ export default function KlienContainer({
           }
         }
         setIsAuthenticated(false);
-        setLoading(false);
+        if (!isBackground) setLoading(false);
         return;
       }
 
+      console.log("fetchBasicEvent calling getKlienAkun", username);
       const data = await getKlienAkun({ username });
+      console.log("fetchBasicEvent got data", data);
       const requestedUsername = username ? decodeURIComponent(username) : null;
       const foundEvent = requestedUsername
         ? data.find((e: any) => e.username === requestedUsername)
@@ -181,10 +212,10 @@ export default function KlienContainer({
       if (!foundEvent) {
         if (username === "klien") {
           setIsAuthenticated(false);
-          setLoading(false);
+          if (!isBackground) setLoading(false);
         } else {
-          setError("not_found");
-          setLoading(false);
+          if (!isBackground) setError("not_found");
+          if (!isBackground) setLoading(false);
         }
       } else {
         localStorage.setItem("last_client_username", foundEvent.username);
@@ -194,28 +225,30 @@ export default function KlienContainer({
           sessionStorage.setItem(authKey, foundEvent.id_klien);
         }
         setExpectedClientId(foundEvent.id_klien);
-        setEvent(foundEvent);
+        setEvent((prev: any) => ({ ...prev, ...foundEvent }));
         setIsAuthenticated(true);
-        fetchFullEvent(foundEvent.id_klien, foundEvent);
+        fetchFullEvent(foundEvent.id_klien, foundEvent, isBackground);
       }
     } catch (err) {
       console.error("Error fetching basic event:", err);
-      setError("Gagal memuat data. Periksa koneksi internet Anda.");
-      setLoading(false);
+      if (!isBackground) setError("Gagal memuat data. Periksa koneksi internet Anda.");
+      if (!isBackground) setLoading(false);
     }
   };
 
-  const fetchFullEvent = async (clientId: string, baseEvent: any = {}) => {
-    setLoading(true);
+  const fetchFullEvent = async (clientId: string, baseEvent: any = {}, isBackground = false) => {
+    if (!isBackground) setLoading(true);
     try {
+      console.log("fetchFullEvent START", clientId);
       const [keluargaList, acaraList, vendorList, catatanList, pengantinList] =
         await Promise.all([
-          getKlienKeluarga(clientId).catch(() => []),
-          getKlienAcara(clientId).catch(() => []),
-          getKlienVendor(clientId).catch(() => []),
-          getKlienCatatan(clientId).catch(() => []),
-          getKlienPengantin(clientId).catch(() => []),
+          getKlienKeluarga(clientId).catch((e) => { console.error("A",e); return [] }),
+          getKlienAcara(clientId).catch((e) => { console.error("B",e); return [] }),
+          getKlienVendor(clientId).catch((e) => { console.error("C",e); return [] }),
+          getKlienCatatan(clientId).catch((e) => { console.error("D",e); return [] }),
+          getKlienPengantin(clientId).catch((e) => { console.error("E",e); return [] }),
         ]);
+        console.log("fetchFullEvent END PROMISE.ALL", clientId);
 
       const k =
         keluargaList.find((d: any) => d.id_klien === clientId) ||
@@ -349,7 +382,7 @@ export default function KlienContainer({
         ...v,
         ...c,
         ...p,
-        pengantin: p,
+        pengantin: p.pengantin || p, // FIX: p is { id_klien, pengantin: {...} }, we need the inner object
         susunan_acara: finalSusunanAcara,
         vendor: parseJsonSafe(
           v.vendor || prev.vendor || v.daftar_vendor || prev.daftar_vendor,
@@ -364,20 +397,34 @@ export default function KlienContainer({
       }));
     } catch (err) {
       console.error("Error fetching full event:", err);
-      setError("Gagal memuat detail data.");
+      if (!isBackground) setError("Gagal memuat detail data.");
     } finally {
-      setLoading(false);
+      console.log("fetchFullEvent FINALLY");
+      if (!isBackground) setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchBasicEvent();
+    try {
+      sessionStorage.removeItem(`cached_event_ui_${username}`);
+    } catch (e) {}
+    let hasCache = false;
+    try {
+      hasCache = !!sessionStorage.getItem(`cached_event_ui_${username}`);
+    } catch {
+      hasCache = false;
+    }
+    fetchBasicEvent(hasCache).catch(err => {
+      console.error(err);
+      setLoading(false);
+      setError("Terjadi kesalahan sistem, silakan muat ulang.");
+    });
 
     // Pastikan refresh data saat tab browser kembali aktif
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
         // Cache cleared by App.tsx, just refetch
-        fetchBasicEvent();
+        fetchBasicEvent(true).catch(console.error);
       }
     };
 
@@ -454,6 +501,14 @@ export default function KlienContainer({
       }
     };
   }, [username]);
+
+  useEffect(() => {
+    if (event && username) {
+      try {
+        sessionStorage.setItem(`cached_event_ui_${username}`, JSON.stringify(event));
+      } catch (e) {}
+    }
+  }, [event, username]);
 
   useEffect(() => {
     if (!username || username === "klien" || !event) return;
@@ -575,13 +630,13 @@ export default function KlienContainer({
       />
     );
   }
-
   const tabItems = [
     { id: "ringkasan", label: "Ringkasan", icon: Home },
     { id: "acara", label: "Acara", icon: CalendarIcon },
     { id: "keluarga", label: "Keluarga", icon: Users },
     { id: "panitia", label: "Panitia", icon: Handshake },
     { id: "catatan", label: "Catatan", icon: NotebookPen },
+    { id: "musik", label: "Musik", icon: Music },
     { id: "ulasan", label: "Ulasan", icon: Star },
     { id: "gdrive", label: "GDrive", icon: FolderOpen },
   ];
@@ -819,6 +874,9 @@ export default function KlienContainer({
                         event.status === 1 || event.status === true
                       }
                     />
+                  )}
+                  {activeTab === "musik" && (
+                    <MusikTab event={event} />
                   )}
                   {activeTab === "ulasan" && (
                     <UlasanPage

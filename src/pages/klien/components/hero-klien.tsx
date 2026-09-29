@@ -49,18 +49,82 @@ export default function Hero({ event }: { event: any }) {
   }, [event?.tanggal, event?.waktu]);
 
   return (
-    <div className="bg-stone-900 text-white w-full relative overflow-hidden aspect-[4/3] md:aspect-[3/1] flex flex-col justify-center items-center text-center">
-      <div className="absolute inset-0">
-        <video
-          src="/video/banner.mp4"
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover"
-        />
-      </div>
-      <div className="absolute inset-0 bg-black/40 md:bg-black/20" />
+    <div className="relative w-full overflow-hidden aspect-[4/3] md:aspect-[3/1] bg-gradient-to-br from-[#e0bb53] via-[#f3d47d] to-[#c79c2e] bg-[size:200%_200%] animate-[bg-shift_12s_ease_infinite] text-white flex flex-col justify-center items-center text-center">
+      <style>{`
+        @keyframes bg-shift {
+          0%, 100% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+        }
+        @keyframes subtle-shimmer {
+          0% {
+            transform: translateX(-150%) skewX(-25deg);
+          }
+          12%, 100% {
+            transform: translateX(150%) skewX(-25deg);
+          }
+        }
+        @keyframes glow-pulse {
+          0%, 100% {
+            opacity: 0.35;
+            transform: scale(1) translate(0px, 0px);
+          }
+          50% {
+            opacity: 0.8;
+            transform: scale(1.15) translate(3%, -2%);
+          }
+        }
+        @keyframes shadow-pulse {
+          0%, 100% {
+            opacity: 0.25;
+            transform: scale(1) translate(0px, 0px);
+          }
+          50% {
+            opacity: 0.6;
+            transform: scale(1.1) translate(-2%, 3%);
+          }
+        }
+        .hero-shimmer-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.04) 30%,
+            rgba(255, 255, 255, 0.22) 50%,
+            rgba(255, 255, 255, 0.04) 70%,
+            rgba(255, 255, 255, 0) 100%
+          );
+          transform: translateX(-150%) skewX(-25deg);
+          animation: subtle-shimmer 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+          pointer-events: none;
+        }
+        .hero-glow-overlay {
+          position: absolute;
+          width: 150%;
+          height: 150%;
+          top: -25%;
+          left: -25%;
+          background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0) 50%);
+          animation: glow-pulse 9s ease-in-out infinite;
+          pointer-events: none;
+          mix-blend-mode: overlay;
+        }
+        .hero-shadow-overlay {
+          position: absolute;
+          width: 150%;
+          height: 150%;
+          bottom: -25%;
+          right: -25%;
+          background: radial-gradient(circle at 75% 75%, rgba(0, 0, 0, 0.35) 0%, rgba(255, 255, 255, 0) 65%);
+          animation: shadow-pulse 11s ease-in-out infinite;
+          pointer-events: none;
+          mix-blend-mode: multiply;
+        }
+      `}</style>
+      <div className="absolute inset-0 bg-black/5" />
+      <div className="hero-glow-overlay" />
+      <div className="hero-shadow-overlay" />
+      <div className="hero-shimmer-overlay" />
       <div className="max-w-3xl mx-auto relative z-10 w-full flex flex-col items-center mt-6 md:mt-10">
         <div className="mb-0 md:mb-8 w-full flex flex-col items-center">
           {event.pengantin?.nama_lengkap_pria ||
@@ -70,8 +134,8 @@ export default function Hero({ event }: { event: any }) {
                 className="text-2xl sm:text-3xl md:text-5xl font-bold tracking-tight leading-tight mb-3 md:mb-8 mt-2 md:mt-4 capitalize px-4"
                 style={{ fontFamily: "serif" }}
               >
-                {event.pengantin?.nama_panggilan_wanita || "Wanita"} &amp;{" "}
-                {event.pengantin?.nama_panggilan_pria || "Pria"}
+                {event.pengantin?.nama_panggilan_wanita || event.pengantin?.nama_panggilan_wan || "Wanita"} &amp;{" "}
+                {event.pengantin?.nama_panggilan_pria || event.pengantin?.nama_panggilan_pri || "Pria"}
               </h1>
             </div>
           ) : (

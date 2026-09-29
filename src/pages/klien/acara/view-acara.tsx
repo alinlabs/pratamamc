@@ -119,13 +119,18 @@ export default function SusunanAcaraView({
     }
   };
 
-  const getYoutubeEmbedUrl = (url: string) => {
+  const getYoutubeId = (url: string) => {
     if (!url) return null;
     const regExp =
       /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
     const match = url.match(regExp);
-    return match && match[2].length === 11
-      ? `https://www.youtube.com/embed/${match[2]}`
+    return match && match[2].length === 11 ? match[2] : null;
+  };
+
+  const getYoutubeEmbedUrl = (url: string) => {
+    const id = getYoutubeId(url);
+    return id
+      ? `https://www.youtube.com/embed/${id}?autoplay=1&playsinline=1&controls=1&rel=0&modestbranding=1&fs=0&disablekb=1&showinfo=0&iv_load_policy=3&enablejsapi=1`
       : null;
   };
 
@@ -503,6 +508,14 @@ export default function SusunanAcaraView({
               }}
               className="relative bg-white w-full sm:w-full sm:max-w-lg rounded-t-2xl sm:rounded-2xl shadow-xl overflow-hidden mt-auto sm:mt-0 max-h-[80vh] sm:max-h-[80vh] flex flex-col"
               onClick={(e) => e.stopPropagation()}
+              drag="y"
+              dragConstraints={{ top: 0, bottom: 0 }}
+              dragElastic={{ top: 0, bottom: 0.2 }}
+              onDragEnd={(e, info) => {
+                if (info.offset.y > 100 || info.velocity.y > 500) {
+                  setSelectedItem(null);
+                }
+              }}
             >
               <div className="p-4 border-b border-stone-100 flex items-center justify-between sticky top-0 bg-white z-10 shrink-0">
                 <h3 className="font-bold text-lg text-stone-900">
@@ -592,21 +605,40 @@ export default function SusunanAcaraView({
                         {musicArray.map((musicItem, musicIdx) => {
                           const trackId = `${selectedItem.id || selectedItem.kegiatan || selectedItem.judul}-${musicIdx}`;
 
+                          const isInternalMusic = String(musicItem).startsWith('msc-');
+                          const baseMusicId = isInternalMusic ? String(musicItem).split('-').slice(0, 2).join('-') : musicItem;
+                          
                           const matchedSong = allMusik.find((m) => {
                             const songLink =
                               m.versi?.[0]?.tautan || m.tautan || m.link;
+                            const mBaseId = String(m.id).startsWith('msc-') ? String(m.id).split('-').slice(0, 2).join('-') : m.id;
+
                             return (
                               String(m.id) === String(musicItem) ||
+                              (isInternalMusic && mBaseId === baseMusicId) ||
                               String(m.id).startsWith(String(musicItem)) ||
                               String(songLink) === String(musicItem)
                             );
                           });
+                          
                           const isOurAsset = !!matchedSong;
-                          const linkMusik = isOurAsset
-                            ? matchedSong.versi?.[0]?.tautan ||
-                              matchedSong.tautan ||
-                              matchedSong.link
-                            : musicItem;
+                          
+                          let linkMusik = musicItem;
+                          if (isOurAsset) {
+                             const variantMatches = String(musicItem).split('-');
+                             const requestedVariant = variantMatches.length > 2 ? variantMatches[2].toLowerCase() : '';
+                             
+                             let specificTautan = null;
+                             if (requestedVariant && matchedSong?.versi) {
+                               const vMatch = matchedSong.versi.find((v: any) => v.kategori?.toLowerCase() === requestedVariant);
+                               if (vMatch && vMatch.tautan) {
+                                  specificTautan = vMatch.tautan;
+                               }
+                             }
+                             
+                             linkMusik = specificTautan || matchedSong.versi?.[0]?.tautan || matchedSong.tautan || matchedSong.link;
+                          }
+                          
                           const songName = matchedSong
                             ? `${matchedSong.artis} - ${matchedSong.judul}`
                             : musicItem;
@@ -619,14 +651,16 @@ export default function SusunanAcaraView({
                               {typeof musicItem === "string" &&
                               getYoutubeEmbedUrl(musicItem) ? (
                                 <div className="space-y-2">
-                                  <div className="relative w-full rounded-xl overflow-hidden shadow-sm border border-stone-200 aspect-video max-w-md">
-                                    <iframe
-                                      src={getYoutubeEmbedUrl(musicItem)!}
-                                      title={`YouTube Video - ${musicIdx}`}
-                                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                      allowFullScreen
-                                      className="absolute top-0 left-0 w-full h-full"
-                                    />
+                                  <div className="relative w-full rounded-xl overflow-hidden shadow-sm border border-stone-200 bg-black aspect-video max-w-md">
+                                    <div className="absolute w-[200%] h-[200%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 scale-50 origin-center">
+                                      <iframe
+                                        src={getYoutubeEmbedUrl(musicItem)!}
+                                        title={`YouTube Video - ${musicIdx}`}
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        allowFullScreen
+                                        className="w-full h-full pointer-events-auto"
+                                      />
+                                    </div>
                                   </div>
                                 </div>
                               ) : (
@@ -664,9 +698,9 @@ export default function SusunanAcaraView({
                                       >
                                         <Rewind className="w-4 h-4" />
                                       </button>
-                                      <div className="relative flex-1 h-2 bg-stone-200 rounded-full flex items-center">
+                                      <div className="relative flex-1 h-1.5 bg-stone-200 rounded-lg flex items-center">
                                         <div
-                                          className="absolute left-0 h-full bg-stone-800 rounded-full pointer-events-none"
+                                          className="absolute left-0 h-full bg-stone-800 rounded-lg pointer-events-none"
                                           style={{
                                             width: `${(audioProgress / (audioDuration || 1)) * 100}%`,
                                           }}
@@ -679,6 +713,10 @@ export default function SusunanAcaraView({
                                           onChange={handleProgressChange}
                                           className="w-full opacity-0 cursor-pointer h-full absolute inset-0 m-0 z-10"
                                         />
+                                        <div 
+                                          className="absolute w-2.5 h-2.5 bg-stone-800 rounded-full pointer-events-none transform -translate-x-1/2"
+                                          style={{ left: `${(audioProgress / (audioDuration || 1)) * 100}%` }}
+                                        ></div>
                                       </div>
                                       <button
                                         onClick={(e) => skipMusic(e, 10)}

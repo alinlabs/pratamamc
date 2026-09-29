@@ -16,8 +16,22 @@ export function synchronizeAcaraWithDefaults(acaraList: any[]): any[] {
     if (activity === "sungkeman") {
       return {
         ...item,
-        segmen: "Adat",
-        musik: ["msc-002-saxophone"]
+        segmen: item.segmen || "Adat",
+        musik: item.musik !== undefined ? item.musik : ["msc-002-saxophone"]
+      };
+    }
+    if (activity === "penyandingan pengantin") {
+      return {
+        ...item,
+        segmen: item.segmen || "Akad",
+        musik: item.musik !== undefined ? item.musik : ["msc-004-piano"]
+      };
+    }
+    if (activity === "doa pengantin" || activity === "doa diatas ubun ubun" || activity === "doa di atas ubun-ubun") {
+      return {
+        ...item,
+        segmen: item.segmen || "Akad",
+        musik: item.musik !== undefined ? item.musik : ["msc-002-saxophone"]
       };
     }
     if (
@@ -29,29 +43,39 @@ export function synchronizeAcaraWithDefaults(acaraList: any[]): any[] {
     ) {
       return {
         ...item,
-        segmen: "Adat",
-        musik: ["msc-012-vokal"]
+        segmen: item.segmen || "Adat",
+        musik: item.musik !== undefined ? item.musik : ["msc-012-vokal"]
       };
     }
     if (activity === "saweran") {
       return {
         ...item,
-        segmen: "Adat",
-        musik: ["msc-010-vokal", "msc-011-vokal"]
+        segmen: item.segmen || "Adat",
+        musik: item.musik !== undefined ? item.musik : ["msc-010-vokal", "msc-011-vokal"]
       };
     }
     if (activity === "sesi foto keluarga") {
       return {
         ...item,
-        segmen: "Istirahat",
-        musik: []
+        segmen: item.segmen || "Istirahat",
+        musik: item.musik !== undefined ? item.musik : []
       };
     }
     if (activity === "flashmob" || activity === "flashmob remix") {
       return {
         ...item,
         segmen: item.segmen || "Mingle",
-        musik: ["msc-023"]
+        musik: item.musik !== undefined ? item.musik : ["msc-023"]
+      };
+    }
+    if (activity === "kirab pengantin" || activity === "kirab") {
+      return {
+        ...item,
+        segmen: item.segmen || "Resepsi",
+        musik: item.musik !== undefined ? item.musik : [
+          "https://youtu.be/GFBMg92iTpE?si=k0ziucwtHIozsa-v",
+          "https://youtu.be/OaxIVQLit2w?si=4fAwML5dwJi1mQMj"
+        ]
       };
     }
     
@@ -198,15 +222,30 @@ export async function fetchWithFallback<T>(
     moduleName || endpoint.split("?")[0].split("/").pop() || "Data";
   const cacheKey = endpoint;
 
+  const getFetchUrl = () => {
+    if (ttl <= 0) {
+      return `${CF_WORKER_URL}${endpoint}${endpoint.includes('?') ? '&' : '?'}_t=${Date.now()}`;
+    }
+    return `${CF_WORKER_URL}${endpoint}`;
+  };
+
+  const getFetchOpts = (): RequestInit => {
+    const opts: RequestInit = {
+      method: "GET",
+      headers: getRequestHeaders(),
+    };
+    if (ttl <= 0) {
+      opts.cache = "no-store";
+    }
+    return opts;
+  };
+
   const cachedData = getFromCache<T>(cacheKey, ttl);
 
   // Background fetch logic (Stale-While-Revalidate)
   const bgFetch = async () => {
     try {
-      const response = await fetch(`${CF_WORKER_URL}${endpoint}`, {
-        method: "GET",
-        headers: getRequestHeaders(),
-      });
+      const response = await fetch(getFetchUrl(), getFetchOpts());
       if (response.ok) {
         const data = await response.json();
         let isDataEmpty = false;
@@ -234,10 +273,13 @@ export async function fetchWithFallback<T>(
   }
 
   try {
-    const response = await fetch(`${CF_WORKER_URL}${endpoint}`, {
-      method: "GET",
-      headers: getRequestHeaders(),
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+    const response = await fetch(getFetchUrl(), {
+      ...getFetchOpts(),
+      signal: controller.signal,
     });
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
       throw new Error(
@@ -286,7 +328,10 @@ export async function fetchWithFallback<T>(
           `Data online gagal dimuat dan fallback tidak tersedia untuk endpoint ini.`,
         );
       }
-      const localRes = await fetch(fallbackJsonPath);
+      const localController = new AbortController();
+      const localTimeout = setTimeout(() => localController.abort(), 5000);
+      const localRes = await fetch(fallbackJsonPath, { signal: localController.signal });
+      clearTimeout(localTimeout);
       if (!localRes.ok) {
         throw new Error(
           `Data lokal cadangan pada ${fallbackJsonPath} tidak dapat dimuat.`,

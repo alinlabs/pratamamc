@@ -104,7 +104,9 @@
     "deskripsi": "Mempelai wanita berjalan menghampiri dari belakang. Mempelai pria berbalik menatap syukur, diakhiri salaman tanpa sentuhan.",
     "catatan": "Mempelai wanita dipandu keluar kamar, Kerudung akad terpasang rapi, Pengantin pria berbalik badan",
     "durasi": 15,
-    "musik": [],
+    "musik": [
+      "msc-004-piano"
+    ],
     "status": ""
   },
   {
@@ -185,7 +187,9 @@
     "deskripsi": "Mempelai pria memegang ubun-ubun istri sambil berdoa. Diakhiri dengan kecupan kening dan tiupan pelan di ubun-ubun.",
     "catatan": "Mempelai pria memegang ubun-ubun istri, Kecupan kening dikoordinasikan dengan tim WO",
     "durasi": 10,
-    "musik": [],
+    "musik": [
+      "msc-002-saxophone"
+    ],
     "status": ""
   },
   {
@@ -317,7 +321,10 @@
     "deskripsi": "Iring-iringan elegan kedua mempelai memasuki ruang resepsi menuju pelaminan.",
     "catatan": "Pagar ayu dan pagar bagus bersiap di barisan depan, Pengantin berjalan perlahan dengan tempo khusus",
     "durasi": 15,
-    "musik": [],
+    "musik": [
+      "https://youtu.be/GFBMg92iTpE?si=k0ziucwtHIozsa-v",
+      "https://youtu.be/OaxIVQLit2w?si=4fAwML5dwJi1mQMj"
+    ],
     "status": ""
   },
   {

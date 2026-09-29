@@ -221,6 +221,14 @@ export default function Tentang() {
               exit={{ y: "100%", opacity: 0 }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
               className="fixed bottom-0 left-0 right-0 md:hidden bg-white p-6 pb-10 rounded-t-[2rem] z-[101] shadow-2xl"
+              drag="y"
+              dragConstraints={{ top: 0, bottom: 0 }}
+              dragElastic={{ top: 0, bottom: 0.2 }}
+              onDragEnd={(e, info) => {
+                if (info.offset.y > 100 || info.velocity.y > 500) {
+                  setSelectedService(null);
+                }
+              }}
             >
               <div className="flex justify-center mb-6">
                 <div className="w-12 h-1.5 bg-stone-200 rounded-full"></div>

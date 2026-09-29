@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Calendar, ChevronDown, Trash2, GripVertical, PlayCircle, PauseCircle } from "lucide-react";
 import ComboBox from "../../../../components/input-combobox";
-import { Reorder } from "motion/react";
+import { Reorder, useDragControls } from "motion/react";
 import { getMusikData } from "../../../../lib/api";
 
 interface Props {
@@ -118,121 +118,161 @@ export default function StepWaktuRundown({
           {acaraList.map((acara, idx) => {
             const isExpanded = expandedAcara[idx] || false;
             return (
-              <Reorder.Item 
-                key={acara.id} 
-                value={acara}
-                className="relative bg-white border border-stone-200 shadow-sm rounded-2xl p-4 sm:p-5 transition-all duration-200 cursor-default flex flex-col"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="cursor-move p-1 text-stone-300 hover:text-stone-500 transition-colors hidden sm:block">
-                    <GripVertical className="w-5 h-5" />
-                  </div>
-                  
-                  <div className="flex-1 space-y-3">
-                    <div 
-                      onClick={(e) => {
-                        // Only toggle if not clicking on child inputs or buttons
-                        const target = e.target as HTMLElement;
-                        if (!target.closest('button') && !target.closest('.cursor-move') && !target.closest('a')) {
-                          setExpandedAcara(prev => ({ ...prev, [idx]: !prev[idx] }));
-                        }
-                      }}
-                      className="flex items-center justify-between cursor-pointer select-none group"
-                    >
-                      <div className="flex items-center gap-2">
-                        <div className="cursor-move p-1 text-stone-300 hover:text-stone-500 transition-colors sm:hidden">
-                          <GripVertical className="w-4 h-4" />
-                        </div>
-                        <span className="font-bold text-stone-800 text-sm group-hover:text-[#DCAF43] transition-colors leading-tight line-clamp-2">
-                          {acara.kegiatan || `Rundown #${idx+1}`}
-                        </span>
-                      </div>
-                      
-                      <div className="flex items-center gap-2 flex-shrink-0 ml-2">
-                        <div className="bg-stone-50 px-2 py-1 rounded-md text-stone-600 text-xs font-semibold whitespace-nowrap border border-stone-100">
-                          {acara.waktu || '-'}
-                        </div>
-                        <ChevronDown 
-                          className={`w-4 h-4 text-stone-400 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} 
-                        />
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            if(window.confirm('Yakin ingin menghapus rundown ini?')) {
-                              handleRemoveAcara(acara.id);
-                            }
-                          }}
-                          className="p-1 hover:bg-red-50 text-stone-400 hover:text-red-500 rounded transition-colors ml-1"
-                          title="Hapus rundown"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </div>
-                    </div>
-                    
-                    {isExpanded && (
-                      <div className="pt-3 border-t border-stone-100 space-y-4 animate-in fade-in slide-in-from-top-1 duration-150 relative z-10">
-                        <div>
-                          <label className="text-[10px] font-bold text-stone-400 uppercase tracking-wider mb-1 block">Deskripsi</label>
-                          <p className="text-xs text-stone-600 leading-relaxed bg-stone-50/50 p-2.5 rounded-lg border border-stone-100">{acara.deskripsi || '-'}</p>
-                        </div>
-                        <div>
-                          <label className="text-[10px] font-bold text-stone-400 uppercase tracking-wider mb-1 block">Catatan</label>
-                          <p className="text-xs text-stone-600 italic leading-relaxed bg-stone-50/50 p-2.5 rounded-lg border border-stone-100">{acara.catatan || '-'}</p>
-                        </div>
-                        
-                        {acara.musik && acara.musik.length > 0 && (
-                           <div>
-                             <label className="text-[10px] font-bold text-stone-400 uppercase tracking-wider mb-2 block">Rekomendasi Lagu</label>
-                             <div className="flex flex-wrap gap-2">
-                               {acara.musik.map((m: string, i: number) => {
-                                  const dbMusic = musikData.find((dm) => dm.id === m);
-                                  const isUrl = m.startsWith('http');
-                                  
-                                  let label = dbMusic ? dbMusic.judul : (isUrl ? 'Lagu (Link)' : `Lagu ${m}`);
-                                  let link = isUrl ? m : (dbMusic ? dbMusic.link : `/musik?search=${m}`);
-                                  let directAudio = dbMusic?.link || (isUrl && m.endsWith('.mp3') ? m : null);
-                                  
-                                  if (m.includes('spotify') || m.includes('youtube') || m.includes('youtu.be')) {
-                                      label = 'Lagu Referensi URL';
-                                  }
-
-                                  const isPlayingThis = playingAudio === directAudio;
-                                  
-                                  return (
-                                    <div key={i} onPointerDown={(e) => e.stopPropagation()} className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-stone-200 rounded-full text-xs font-medium shadow-sm transition-all text-stone-600 hover:border-[#DCAF43]">
-                                      {directAudio ? (
-                                        <button 
-                                          type="button"
-                                          onClick={(e) => { e.preventDefault(); e.stopPropagation(); togglePlay(directAudio); }}
-                                          className={`hover:text-[#DCAF43] ${isPlayingThis ? 'text-[#DCAF43]' : ''}`}
-                                        >
-                                          {isPlayingThis ? <PauseCircle className="w-4 h-4" /> : <PlayCircle className="w-4 h-4" />}
-                                        </button>
-                                      ) : (
-                                        <a href={link} target="_blank" rel="noopener noreferrer" className="hover:text-[#DCAF43]" onClick={(e) => e.stopPropagation()}>
-                                          <PlayCircle className="w-4 h-4" />
-                                        </a>
-                                      )}
-                                      <a href={link} target="_blank" rel="noopener noreferrer" className="hover:text-[#DCAF43]" onClick={(e) => e.stopPropagation()}>
-                                        <span className={isPlayingThis ? 'text-[#DCAF43]' : ''}>{label}</span>
-                                      </a>
-                                    </div>
-                                  );
-                               })}
-                             </div>
-                           </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </Reorder.Item>
+              <RundownItem
+                key={acara.id}
+                acara={acara}
+                idx={idx}
+                isExpanded={isExpanded}
+                setExpandedAcara={setExpandedAcara}
+                handleRemoveAcara={handleRemoveAcara}
+                musikData={musikData}
+                playingAudio={playingAudio}
+                togglePlay={togglePlay}
+              />
             );
           })}
         </Reorder.Group>
       </div>
     </div>
+  );
+}
+
+function RundownItem({
+  acara,
+  idx,
+  isExpanded,
+  setExpandedAcara,
+  handleRemoveAcara,
+  musikData,
+  playingAudio,
+  togglePlay,
+}: any) {
+  const dragControls = useDragControls();
+
+  return (
+    <Reorder.Item
+      value={acara}
+      dragListener={false}
+      dragControls={dragControls}
+      className="relative bg-white border border-stone-200 shadow-sm rounded-2xl p-4 sm:p-5 transition-all duration-200 cursor-default flex flex-col"
+    >
+      <div className="flex items-center gap-3">
+        <div 
+          className="cursor-grab active:cursor-grabbing p-1.5 text-stone-300 hover:text-stone-500 hover:bg-stone-50 rounded-lg transition-all hidden sm:block select-none"
+          onPointerDown={(e) => {
+            e.preventDefault();
+            dragControls.start(e);
+          }}
+        >
+          <GripVertical className="w-5 h-5" />
+        </div>
+        
+        <div className="flex-1 space-y-3">
+          <div 
+            onClick={(e) => {
+              // Only toggle if not clicking on child inputs or buttons
+              const target = e.target as HTMLElement;
+              if (!target.closest('button') && !target.closest('.cursor-grab') && !target.closest('.cursor-move') && !target.closest('a')) {
+                setExpandedAcara(prev => ({ ...prev, [idx]: !prev[idx] }));
+              }
+            }}
+            className="flex items-center justify-between cursor-pointer select-none group"
+          >
+            <div className="flex items-center gap-2">
+              <div 
+                className="cursor-grab active:cursor-grabbing p-1 text-stone-300 hover:text-stone-500 transition-colors sm:hidden select-none"
+                onPointerDown={(e) => {
+                  e.preventDefault();
+                  dragControls.start(e);
+                }}
+              >
+                <GripVertical className="w-4 h-4" />
+              </div>
+              <span className="font-bold text-stone-800 text-sm group-hover:text-[#DCAF43] transition-colors leading-tight line-clamp-2">
+                {acara.kegiatan || `Rundown #${idx+1}`}
+              </span>
+            </div>
+            
+            <div className="flex items-center gap-2 flex-shrink-0 ml-2">
+              <div className="bg-stone-50 px-2 py-1 rounded-md text-stone-600 text-xs font-semibold whitespace-nowrap border border-stone-100">
+                {acara.waktu || '-'}
+              </div>
+              <ChevronDown 
+                className={`w-4 h-4 text-stone-400 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} 
+              />
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if(window.confirm('Yakin ingin menghapus rundown ini?')) {
+                    handleRemoveAcara(acara.id);
+                  }
+                }}
+                className="p-1.5 hover:bg-red-50 text-stone-400 hover:text-red-500 rounded-lg transition-colors ml-1 cursor-pointer"
+                title="Hapus rundown"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+          
+          {isExpanded && (
+            <div className="pt-3 border-t border-stone-100 space-y-4 animate-in fade-in slide-in-from-top-1 duration-150 relative z-10">
+              <div>
+                <label className="text-[10px] font-bold text-stone-400 uppercase tracking-wider mb-1 block">Deskripsi</label>
+                <p className="text-xs text-stone-600 leading-relaxed bg-stone-50/50 p-2.5 rounded-lg border border-stone-100 select-text">{acara.deskripsi || '-'}</p>
+              </div>
+              <div>
+                <label className="text-[10px] font-bold text-stone-400 uppercase tracking-wider mb-1 block">Catatan</label>
+                <p className="text-xs text-stone-600 italic leading-relaxed bg-stone-50/50 p-2.5 rounded-lg border border-stone-100 select-text">{acara.catatan || '-'}</p>
+              </div>
+              
+              {acara.musik && acara.musik.length > 0 && (
+                 <div>
+                   <label className="text-[10px] font-bold text-stone-400 uppercase tracking-wider mb-2 block">Rekomendasi Lagu</label>
+                   <div className="flex flex-wrap gap-2">
+                     {acara.musik.map((m: string, i: number) => {
+                        const dbMusic = musikData.find((dm) => dm.id === m);
+                        const isUrl = m.startsWith('http');
+                        
+                        let label = dbMusic ? dbMusic.judul : (isUrl ? 'Lagu (Link)' : `Lagu ${m}`);
+                        let link = isUrl ? m : (dbMusic ? dbMusic.link : `/musik?search=${m}`);
+                        let directAudio = dbMusic?.link || (isUrl && m.endsWith('.mp3') ? m : null);
+                        
+                        if (m.includes('spotify') || m.includes('youtube') || m.includes('youtu.be')) {
+                            label = 'Lagu Referensi URL';
+                        }
+
+                        const isPlayingThis = playingAudio === directAudio;
+                        
+                        return (
+                          <div key={i} onPointerDown={(e) => e.stopPropagation()} className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-stone-200 rounded-full text-xs font-medium shadow-sm transition-all text-stone-600 hover:border-[#DCAF43]">
+                            {directAudio ? (
+                              <button 
+                                type="button"
+                                onClick={(e) => { e.preventDefault(); e.stopPropagation(); togglePlay(directAudio); }}
+                                className={`hover:text-[#DCAF43] ${isPlayingThis ? 'text-[#DCAF43]' : ''}`}
+                              >
+                                {isPlayingThis ? <PauseCircle className="w-4 h-4" /> : <PlayCircle className="w-4 h-4" />}
+                              </button>
+                            ) : (
+                              <a href={link} target="_blank" rel="noopener noreferrer" className="hover:text-[#DCAF43]" onClick={(e) => e.stopPropagation()}>
+                                <PlayCircle className="w-4 h-4" />
+                              </a>
+                            )}
+                            <a href={link} target="_blank" rel="noopener noreferrer" className="hover:text-[#DCAF43]" onClick={(e) => e.stopPropagation()}>
+                              <span className={isPlayingThis ? 'text-[#DCAF43]' : ''}>{label}</span>
+                            </a>
+                          </div>
+                        );
+                     })}
+                   </div>
+                 </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </Reorder.Item>
   );
 }

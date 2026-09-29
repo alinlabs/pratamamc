@@ -180,6 +180,14 @@ export default function WelcomePopup() {
               exit={{ opacity: 0, y: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200, mass: 0.8 }}
               className={`relative w-full max-w-lg bg-[#C2973E] border-[#C2973E]/50 text-white rounded-t-3xl md:rounded-3xl shadow-2xl overflow-y-auto scrollbar-hide border max-h-[90vh] mt-auto md:mt-0`}
+              drag="y"
+              dragConstraints={{ top: 0, bottom: 0 }}
+              dragElastic={{ top: 0, bottom: 0.2 }}
+              onDragEnd={(e, info) => {
+                if (info.offset.y > 100 || info.velocity.y > 500) {
+                  handleClose();
+                }
+              }}
             >
               <button 
                 onClick={handleClose}

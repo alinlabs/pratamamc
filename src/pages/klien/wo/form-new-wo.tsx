@@ -131,14 +131,15 @@ export default function ShareableWOForm({ event, onSaved, hideBanner }: { event:
         </div>
 
         <form id="wo-form" onSubmit={handleSave} className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-stone-200" onKeyDown={(e) => {
-            if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+            const target = e.target as any;
+            if (e.key === 'Enter' && target.tagName !== 'TEXTAREA') {
               e.preventDefault();
-              const form = e.target.closest('form');
+              const form = target.closest('form');
               if (!form) return;
               const focusableElements = Array.from(form.querySelectorAll('input:not([type="hidden"]), select, textarea, button[type="submit"]'));
-              const index = focusableElements.indexOf(e.target);
+              const index = focusableElements.indexOf(target);
               if (index > -1 && focusableElements[index + 1]) {
-                focusableElements[index + 1].focus();
+                (focusableElements[index + 1] as any).focus();
               }
             }
           }}>

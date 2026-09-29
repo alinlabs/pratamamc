@@ -6,6 +6,8 @@ export default function PengantinForm({ eventData, onClose }: { eventData: any, 
   const [formData, setFormData] = useState({
     pengantin: eventData.pengantin ? {
       ...eventData.pengantin,
+      nama_panggilan_pria: eventData.pengantin.nama_panggilan_pria || eventData.pengantin.nama_panggilan_pri || '',
+      nama_panggilan_wanita: eventData.pengantin.nama_panggilan_wanita || eventData.pengantin.nama_panggilan_wan || '',
       whatsapp_pria: formatPhoneInput(eventData.pengantin.whatsapp_pria || ''),
       instagram_pria: formatSocialInput(eventData.pengantin.instagram_pria || ''),
       whatsapp_wanita: formatPhoneInput(eventData.pengantin.whatsapp_wanita || ''),

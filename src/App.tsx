@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, useSearchParams } from 'react-router-dom';
 import { useEffect, useState, lazy, Suspense } from 'react';
 import { AnimatePresence } from 'motion/react';
 import { invalidateCache } from './lib/api';
@@ -40,9 +40,11 @@ function KlienRouteProxy({ isFormRoute = false }: { isFormRoute?: boolean }) {
 }
 
 function AppContent() {
+  const [searchParams] = useSearchParams();
+  const isAdminQuery = searchParams.get('admin') === 'klien';
 
   const location = useLocation();
-  const isAdmin = location.pathname.startsWith('/admin');
+  const isAdmin = location.pathname.startsWith('/admin') || isAdminQuery;
   const isKlienAreaByState = location.state?.fromClient === true;
 
   const isMCRoute = ['/', '/portofolio', '/kontak', '/rencana', '/edukasi', '/klien'].includes(location.pathname) || location.pathname.startsWith('/musik') || location.pathname.startsWith('/paket') || location.pathname.startsWith('/vendor');
@@ -78,7 +80,7 @@ function AppContent() {
       <main className={`flex-grow ${!isAdmin && isMCRoute && !isKlienAreaByState ? 'pb-24' : 'pb-0'} md:pb-0`}>
         <Suspense fallback={<PageLoader />}>
           <Routes>
-            <Route path="/" element={<MCContainer />} />
+            <Route path="/" element={isAdminQuery ? <AdminPage /> : <MCContainer />} />
             <Route path="/musik/*" element={<MusikPage />} />
             <Route path="/portofolio" element={<PortofolioPage />} />
             <Route path="/paket" element={<PaketPage />} />

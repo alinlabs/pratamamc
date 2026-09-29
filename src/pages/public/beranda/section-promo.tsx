@@ -94,7 +94,7 @@ export default function PromoCard() {
 
       <div className="relative pt-6 md:pt-0">
         {/* Mobile Floating Timer: Sits exactly on the boundary like a search bar, overlapping the card's top edge */}
-        <div className="md:hidden absolute top-3 -translate-y-1/2 left-1/2 -translate-x-1/2 z-30 w-[80%] max-w-[280px] flex items-center justify-center gap-2 bg-[#DCAF43] border border-[#DCAF43]/40 px-4 py-2.5 rounded-2xl shadow-xl shadow-[#DCAF43]/30">
+        <div className="md:hidden absolute top-3 -translate-y-1/2 left-1/2 -translate-x-1/2 z-30 w-[90%] max-w-[320px] flex items-center justify-center gap-2 bg-[#DCAF43] border border-[#DCAF43]/40 px-4 py-2.5 rounded-2xl shadow-xl shadow-[#DCAF43]/30">
             <div className="flex flex-col items-center flex-1">
               <span className="text-white text-xl font-sans font-extrabold leading-none">{timeLeft.days.toString().padStart(2, '0')}</span>
               <span className="text-[8px] text-white/80 uppercase mt-1 tracking-widest font-sans font-extrabold">Hari</span>
@@ -107,12 +107,12 @@ export default function PromoCard() {
             <span className="text-white pb-3 text-xs font-bold leading-none">:</span>
             <div className="flex flex-col items-center flex-1">
               <span className="text-white text-xl font-sans font-extrabold leading-none">{timeLeft.minutes.toString().padStart(2, '0')}</span>
-              <span className="text-[8px] text-white/80 uppercase mt-1 tracking-widest font-sans font-extrabold">Mnt</span>
+              <span className="text-[8px] text-white/80 uppercase mt-1 tracking-widest font-sans font-extrabold">Menit</span>
             </div>
             <span className="text-white pb-3 text-xs font-bold leading-none">:</span>
             <div className="flex flex-col items-center flex-1">
               <span className="text-white text-xl font-sans font-extrabold leading-none">{timeLeft.seconds.toString().padStart(2, '0')}</span>
-              <span className="text-[8px] text-white/80 uppercase mt-1 tracking-widest font-sans font-extrabold">Dtk</span>
+              <span className="text-[8px] text-white/80 uppercase mt-1 tracking-widest font-sans font-extrabold">Detik</span>
             </div>
         </div>
 
@@ -136,12 +136,12 @@ export default function PromoCard() {
               <span className="text-white pb-6 text-3xl font-light">:</span>
               <div className="flex flex-col items-center">
                 <span className="bg-white rounded-xl px-4 py-2 shadow-sm border border-stone-200 min-w-[4rem] text-center text-red-600 text-3xl font-extrabold">{timeLeft.minutes.toString().padStart(2, '0')}</span>
-                <span className="text-[10px] text-white/90 uppercase mt-2 tracking-widest font-extrabold">Mnt</span>
+                <span className="text-[10px] text-white/90 uppercase mt-2 tracking-widest font-extrabold">Menit</span>
               </div>
               <span className="text-white pb-6 text-3xl font-light">:</span>
               <div className="flex flex-col items-center">
                 <span className="bg-white rounded-xl px-4 py-2 shadow-sm border border-red-700/20 min-w-[4rem] text-center text-red-600 text-3xl font-extrabold">{timeLeft.seconds.toString().padStart(2, '0')}</span>
-                <span className="text-[10px] text-white/90 uppercase mt-2 tracking-widest font-extrabold">Dtk</span>
+                <span className="text-[10px] text-white/90 uppercase mt-2 tracking-widest font-extrabold">Detik</span>
               </div>
           </div>
         </div>
@@ -225,6 +225,14 @@ export default function PromoCard() {
                   exit={{ y: "100%", opacity: 0, scale: 0.95 }}
                   transition={{ type: "spring", damping: 25, stiffness: 200 }}
                   className="pointer-events-auto bg-white rounded-t-[2rem] md:rounded-[2rem] w-full md:max-w-2xl max-h-[85vh] md:max-h-[90vh] flex flex-col overflow-hidden shadow-2xl relative"
+                  drag="y"
+                  dragConstraints={{ top: 0, bottom: 0 }}
+                  dragElastic={{ top: 0, bottom: 0.2 }}
+                  onDragEnd={(e, info) => {
+                    if (info.offset.y > 100 || info.velocity.y > 500) {
+                      setSelectedPackage(false);
+                    }
+                  }}
                 >
                   <button 
                     onClick={() => setSelectedPackage(false)}

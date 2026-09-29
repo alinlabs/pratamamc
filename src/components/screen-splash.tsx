@@ -5,7 +5,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const duration = 7000;
+    const duration = 5000;
     const interval = 50;
     const step = (100 * interval) / duration;
 
@@ -45,6 +45,20 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
             className="w-full h-full object-cover object-center absolute inset-0"
           />
         </picture>
+        {/* Dark gradient overlay from bottom to top */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none" />
+
+        {/* Dynamic breathing text Pratama MC ... */}
+        <div className="absolute bottom-10 left-0 right-0 text-center px-4">
+          <motion.p 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: [0.5, 1, 0.5] }}
+            transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
+            className="text-white text-base sm:text-lg font-semibold tracking-[0.25em] font-sans"
+          >
+            Pratama MC ...
+          </motion.p>
+        </div>
       </div>
 
       <div className="absolute bottom-0 left-0 w-full h-1 bg-stone-900/50">

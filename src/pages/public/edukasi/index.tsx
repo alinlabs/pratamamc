@@ -302,7 +302,7 @@ export default function EdukasiPage() {
                     <iframe
                       src={
                         selectedItem.video.includes("youtube.com/watch?v=")
-                          ? selectedItem.video.replace("watch?v=", "embed/")
+                          ? `${selectedItem.video.replace("watch?v=", "embed/")}?controls=0&rel=0&modestbranding=1&showinfo=0`
                           : selectedItem.video
                       }
                       title={selectedItem.judul}

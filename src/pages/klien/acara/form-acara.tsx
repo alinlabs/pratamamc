@@ -33,14 +33,24 @@ function MusikCombobox({
   allMusik: any[];
   onChange: (val: string) => void;
 }) {
-  const matchedSong = allMusik.find((m) => String(m.id) === String(value) || String(m.id).startsWith(String(value)));
+  const isInternalMusic = String(value).startsWith('msc-');
+  const baseValueId = isInternalMusic ? String(value).split('-').slice(0, 2).join('-') : String(value);
+  const matchedSong = allMusik.find((m) => {
+      const mBaseId = String(m.id).startsWith('msc-') ? String(m.id).split('-').slice(0, 2).join('-') : String(m.id);
+      return String(m.id) === String(value) || (isInternalMusic && mBaseId === baseValueId) || String(m.id).startsWith(String(value));
+  });
   const [inputValue, setInputValue] = React.useState(
     matchedSong ? `${matchedSong.artis} - ${matchedSong.judul}` : value || "",
   );
   const [isOpen, setIsOpen] = React.useState(false);
 
   React.useEffect(() => {
-    const matched = allMusik.find((m) => String(m.id) === String(value) || String(m.id).startsWith(String(value)));
+    const isInternalMusic = String(value).startsWith('msc-');
+    const baseValId = isInternalMusic ? String(value).split('-').slice(0, 2).join('-') : String(value);
+    const matched = allMusik.find((m) => {
+        const mBase = String(m.id).startsWith('msc-') ? String(m.id).split('-').slice(0, 2).join('-') : String(m.id);
+        return String(m.id) === String(value) || (isInternalMusic && mBase === baseValId) || String(m.id).startsWith(String(value));
+    });
     if (!isOpen) {
       setInputValue(
         matched ? `${matched.artis} - ${matched.judul}` : value || "",

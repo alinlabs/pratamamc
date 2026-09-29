@@ -190,15 +190,15 @@ export default function AdminPage() {
           >
             <h3 className="font-bold text-sm text-stone-800 mb-2">Setup Token Otentikasi API</h3>
             <p className="text-xs text-stone-500 mb-3">
-              Masukkan kunci API_KEY, AUTH_TOKEN, atau password administrator Anda di bawah ini agar operasi pengulisan (write/save) ke database Cloudflare D1 diperbolehkan:
+              Masukkan kunci API_KEY, AUTH_TOKEN, atau password administrator Anda di bawah ini agar operasi penulisan (write/save) ke database Cloudflare D1 diperbolehkan:
             </p>
-            <div className="flex gap-2">
+            <div className="flex gap-2 mb-4">
               <input 
                 type="password" 
                 placeholder="Token Otentikasi / Password Admin"
                 value={apiKeyInput}
                 onChange={(e) => setApiKeyInput(e.target.value)}
-                className="flex-1 px-3 py-1.5 text-sm border border-stone-300 rounded-lg focus:outline-none  "
+                className="flex-1 px-3 py-1.5 text-sm border border-stone-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-stone-400"
               />
               <button 
                 onClick={handleSaveApiKey}
@@ -207,11 +207,33 @@ export default function AdminPage() {
                 <Check className="w-4 h-4" /> Simpan
               </button>
             </div>
+
+            {/* Penjelasan Edukatif Terkait Token Otentikasi */}
+            <div className="bg-stone-50 border border-stone-200 rounded-lg p-4 text-xs text-stone-600 space-y-2">
+              <p className="font-semibold text-stone-800 flex items-center gap-1">💡 Apa ini & Mengapa diperlukan?</p>
+              <ul className="list-disc pl-4 space-y-1">
+                <li>
+                  <strong className="text-stone-700">Tujuan Keamanan:</strong> Database Cloudflare D1 SQL Anda dilindungi oleh sistem otentikasi agar tidak sembarang orang bisa memodifikasi atau menghapus data klien Anda di internet.
+                </li>
+                <li>
+                  <strong className="text-stone-700">Fungsi Token:</strong> Token ini adalah password rahasia admin yang dicocokkan oleh server Cloudflare Worker. Tanpa token yang tepat, Anda hanya bisa membaca (Read-Only) data, namun tidak bisa menambah (Create) atau menghapus (Delete) acara secara permanen.
+                </li>
+                <li>
+                  <strong className="text-stone-700">Di mana mendapatkannya?</strong> Token ini diatur di panel konfigurasi Cloudflare Worker Anda (melalui variabel lingkungan <code className="bg-stone-200 px-1 py-0.5 rounded font-mono">ADMIN_PASSWORD</code> atau <code className="bg-stone-200 px-1 py-0.5 rounded font-mono">CF_API_KEY</code>).
+                </li>
+                <li>
+                  <strong className="text-stone-700">Penyimpanan Aman:</strong> Token yang Anda masukkan di atas hanya disimpan secara lokal di browser Anda sendiri (Local Storage) dan otomatis disematkan pada setiap permintaan penulisan data ke cloud.
+                </li>
+              </ul>
+            </div>
           </motion.div>
         )}
 
         <div className="flex justify-between items-center mb-10">
           <h1 className="text-3xl font-bold">Dasbor Admin</h1>
+          <Link to="/" className="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors flex items-center gap-1.5">
+            ← Kembali ke Beranda
+          </Link>
         </div>
 
         <div className="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden">
@@ -235,8 +257,9 @@ export default function AdminPage() {
                   <div key={id_klien} className="p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-stone-50 transition-colors">
                     <div>
                       <h3 className="font-bold text-lg mb-1">{event.tema || 'Event'}</h3>
-                      <div className="text-sm text-stone-500 flex flex-wrap gap-x-4 gap-y-1">
-                        <span>Username: {event.username}</span>
+                      <div className="text-sm text-stone-500 flex flex-wrap gap-x-4 gap-y-1.5 items-center">
+                        <span className="bg-stone-100 text-stone-700 px-2.5 py-0.5 rounded font-mono text-xs font-semibold">ID Klien: {id_klien}</span>
+                        <span>Username: <strong className="text-stone-800">{event.username}</strong></span>
                         <span>Tanggal: {new Date(event.tanggal || event.date).toLocaleDateString('id-ID')}</span>
                       </div>
                     </div>

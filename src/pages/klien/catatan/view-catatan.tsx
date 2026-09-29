@@ -97,6 +97,14 @@ const NoteItem: React.FC<{ note: Note }> = ({ note }) => {
               exit={{ y: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
               className="w-full md:max-w-2xl max-h-[80vh] md:max-h-[80vh] bg-white rounded-t-3xl md:rounded-3xl shadow-2xl relative z-10 flex flex-col overflow-hidden mt-auto md:mt-0"
+              drag="y"
+              dragConstraints={{ top: 0, bottom: 0 }}
+              dragElastic={{ top: 0, bottom: 0.2 }}
+              onDragEnd={(e, info) => {
+                if (info.offset.y > 100 || info.velocity.y > 500) {
+                  setIsOpen(false);
+                }
+              }}
             >
               <div className="w-full flex justify-center pt-3 pb-1 md:hidden">
                 <div className="w-12 h-1.5 bg-stone-200 rounded-full" />

@@ -166,7 +166,7 @@ export default function NavigasiKlien({
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
             ? "bg-white/90 backdrop-blur-md border-b border-stone-200 py-0 shadow-sm"
-            : "bg-transparent border-transparent pt-0.5 pb-2 md:py-2"
+            : "bg-transparent border-transparent pt-4 sm:pt-0.5 pb-2 md:py-2"
         } ${textColorClass}`}
       >
         <div className={`max-w-6xl mx-auto px-4 md:px-6 flex items-center justify-between gap-6 transition-all duration-300 ${
@@ -351,6 +351,14 @@ export default function NavigasiKlien({
               exit={{ y: "100%", scale: 1 }}
               transition={{ type: "spring", bounce: 0, duration: 0.4 }}
               className="bg-white p-6 md:p-8 pt-8 md:pt-8 pb-10 md:pb-8 rounded-t-[2rem] md:rounded-3xl shadow-2xl flex flex-col items-center w-full md:max-w-sm md:mx-auto relative md:!y-0 md:!scale-95 md:animate-[none]"
+              drag="y"
+              dragConstraints={{ top: 0, bottom: 0 }}
+              dragElastic={{ top: 0, bottom: 0.2 }}
+              onDragEnd={(e, info) => {
+                if (info.offset.y > 100 || info.velocity.y > 500) {
+                  setShowQRModal(false);
+                }
+              }}
             >
               <div className="w-12 h-1.5 bg-stone-200 rounded-full md:hidden absolute top-3 left-1/2 -translate-x-1/2"></div>
               <button

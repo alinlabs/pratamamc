@@ -462,13 +462,14 @@ export default function NewPengantinForm({
 
   return (
     <div className="w-full pb-20 md:pb-0" onKeyDown={(e) => {
-      if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+      const target = e.target as any;
+      if (e.key === 'Enter' && target.tagName !== 'TEXTAREA') {
         e.preventDefault();
         const container = e.currentTarget;
         const focusableElements = Array.from(container.querySelectorAll('input:not([type="hidden"]), select, textarea, button[type="submit"], button[type="button"].next-btn, button[type="button"].save-btn'));
-        const index = focusableElements.indexOf(e.target);
+        const index = focusableElements.indexOf(target);
         if (index > -1 && focusableElements[index + 1]) {
-          focusableElements[index + 1].focus();
+          (focusableElements[index + 1] as any).focus();
         }
       }
     }}>
@@ -644,6 +645,14 @@ export default function NewPengantinForm({
               exit={{ opacity: 0, y: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
               className="bg-white rounded-t-3xl sm:rounded-3xl w-full max-w-sm sm:max-w-md overflow-hidden shadow-2xl pb-safe sm:pb-0 flex flex-col max-h-[85vh]"
+              drag="y"
+              dragConstraints={{ top: 0, bottom: 0 }}
+              dragElastic={{ top: 0, bottom: 0.2 }}
+              onDragEnd={(e, info) => {
+                if (info.offset.y > 100 || info.velocity.y > 500) {
+                  setShowValidationModal(false);
+                }
+              }}
             >
               <div className="p-6 pb-4 border-b border-stone-100 flex-shrink-0 flex flex-col items-center">
                 <div className="w-12 h-1.5 bg-stone-200 rounded-full mb-6 sm:hidden"></div>
@@ -705,6 +714,14 @@ export default function NewPengantinForm({
               exit={{ opacity: 0, y: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
               className="bg-white rounded-t-3xl sm:rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl pb-safe sm:pb-0"
+              drag="y"
+              dragConstraints={{ top: 0, bottom: 0 }}
+              dragElastic={{ top: 0, bottom: 0.2 }}
+              onDragEnd={(e, info) => {
+                if (info.offset.y > 100 || info.velocity.y > 500) {
+                  setShowSuccessModal(false);
+                }
+              }}
             >
               <div className="p-6 pb-8 text-center flex flex-col items-center">
                 <div className="w-12 h-1.5 bg-stone-200 rounded-full mb-6 sm:hidden"></div>
